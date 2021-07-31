@@ -121,19 +121,19 @@ df[["name","weighted_average","weighted_rank"]]
 
 # # Rank (not used in analysis)
 
-# In[18]:
+# In[17]:
 
 
 #df["by_rank"] = (df['rank_BW'] + df['rank_EG'] + df['rank_Harmonic'] + df['rank_Degree'])/4
 
 
-# In[19]:
+# In[18]:
 
 
 #df["order"] = df["by_rank"].rank(method ="max", ascending = True)
 
 
-# In[20]:
+# In[19]:
 
 
 #df[["name","by_rank","order"]]
@@ -144,7 +144,7 @@ df[["name","weighted_average","weighted_rank"]]
 # ### the following code will use a for loop to provide each ranking a different weighting score 
 # 
 
-# In[17]:
+# In[20]:
 
 
 # using the rank function to give each score a ranking 
@@ -227,7 +227,7 @@ for i in range(0,len(df)):
             df['sD'][i] = df['Degree'][i]*x
 
 
-# In[38]:
+# In[28]:
 
 
 df["normalized_BW"]=(df["sBW"]-df["sBW"].min())/(df["sBW"].max()-df["sBW"].min())
@@ -236,22 +236,23 @@ df["normalized_Degree"]=(df["sD"]-df["sD"].min())/(df["sD"].max()-df["sD"].min()
 df["normalized_Harmonic"]=(df["sHarmonic"]-df["sHarmonic"].min())/(df["sHarmonic"].max()-df["sHarmonic"].min())
 
 
-# In[44]:
+# In[29]:
 
 
 #generate a new average with a new centrality score
 df["OWA"]=(df["sBW"]+df["sEG"]+df["sHarmonic"]+df["sD"])/4
+df["normalized_OWA"]=(df["normalized_BW"]+df["normalized_EG"]+df["normalized_Harmonic"]+df["normalized_Degree"])/4
 #df["OWAv2"]=(df["sBW"]+df["sEG"]+df["sHarmonic"]+df["sD"]+df["sDays"])/5
 
 
-# In[40]:
+# In[30]:
 
 
 df["OWA_rank"] = df["OWA"].rank(method ="max", ascending = False)
 #df["OWA_rankv2"] = df["OWAv2"].rank(method ="max", ascending = False)
 
 
-# In[41]:
+# In[31]:
 
 
 df[["name","OWA","OWA_rank"]]
@@ -259,18 +260,19 @@ df[["name","OWA","OWA_rank"]]
 
 # # Weighted OWA
 
-# In[42]:
+# In[32]:
 
 
 # add further weighting into the OWA score
 df["weighted_OWA"]=df["OWA"]*df["weighted_days"]*df["IsActive"]*df["IsDirector"]
+df["nweighted_OWA"]= (df["weighted_OWA"]-df["weighted_OWA"].min())/(df["weighted_OWA"].max()-df["weighted_OWA"].min())
 df["weighted_OWA_rank"] = df["weighted_OWA"].rank(method ="max", ascending = False)
 
 
-# In[43]:
+# In[33]:
 
 
-df[["name","weighted_OWA","weighted_OWA_rank"]]
+df[["name","weighted_OWA","weighted_OWA_rank","nweighted_OWA"]]
 
 
 # In[34]:
@@ -292,7 +294,6 @@ df.to_csv("final-averagev5.csv", index = False)
 
 
 # In[ ]:
-
 
 
 
