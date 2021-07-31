@@ -241,7 +241,7 @@ df["normalized_Harmonic"]=(df["sHarmonic"]-df["sHarmonic"].min())/(df["sHarmonic
 
 #generate a new average with a new centrality score
 df["OWA"]=(df["sBW"]+df["sEG"]+df["sHarmonic"]+df["sD"])/4
-df["normalized_OWA"]=(df["normalized_BW"]+df["normalized_EG"]+df["normalized_Harmonic"]+df["normalized_Degree"])/4
+df["normalized_OWA"]=(df["OWA"]-df["OWA"].min())/(df["OWA"].max()-df["OWA"].min())
 #df["OWAv2"]=(df["sBW"]+df["sEG"]+df["sHarmonic"]+df["sD"]+df["sDays"])/5
 
 
